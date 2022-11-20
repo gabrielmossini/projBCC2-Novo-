@@ -1,4 +1,4 @@
-﻿@model projBCC2.Models.Produto
+﻿@model projBCC2.Models.Conta
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Produto</h4>
+<h4>Conta</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,19 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="descricao" class="control-label"></label>
-                <input asp-for="descricao" class="form-control" />
-                <span asp-validation-for="descricao" class="text-danger"></span>
+                <label asp-for="clienteid" class="control-label"></label>
+                <select asp-for="clienteid" class="form-control" asp-items="ViewBag.clienteid"></select>
+                <span asp-validation-for="clienteid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="produtoid" class="control-label"></label>
+                <select asp-for="produtoid" class="form-control" asp-items="ViewBag.produtoid"></select>
+                <span asp-validation-for="produtoid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="quantidade" class="control-label"></label>
                 <input asp-for="quantidade" class="form-control" />
                 <span asp-validation-for="quantidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="valor" class="control-label"></label>
-                <input asp-for="valor" class="form-control" />
-                <span asp-validation-for="valor" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -16,9 +16,9 @@ namespace projBCC2.Models
 
         [Required(ErrorMessage = "Conta é obrigatório...")]
         [Display(Name = "Conta: ")]
+        public Conta conta { get; set; }
+        [ForeignKey("Conta")]
         public int contaid { get; set; }
-        public Clientes clientes { get; set; }
-
 
         [Display(Name = "Data: ")]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
@@ -31,7 +31,7 @@ namespace projBCC2.Models
         [Display(Name = "Valor: ")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public float valor { get; set; }
-
+        
         [Display(Name = "Operação: ")]
         public Operacao operacao { get; set; }
 
@@ -46,5 +46,11 @@ namespace projBCC2.Models
             }
         }
 
+        [Display(Name = "Operação: ")]
+        [NotMapped]
+        public virtual string tipoOperacao
+        {
+            get { return (operacao == Operacao.Compra ? "Compra" : "Venda"); }
+        }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,6 @@ using projBCC2.Models;
 
 namespace projBCC2.Controllers
 {
-    [Authorize]
     public class TransacoesController : Controller
     {
         private readonly Contexto _context;
@@ -23,18 +21,20 @@ namespace projBCC2.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Transacao.ToListAsync());
+            var contexto = _context.transacoes.Include(t => t.conta);
+            return View(await contexto.ToListAsync());
         }
 
         // GET: Transacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Transacao == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var transacao = await _context.Transacao
+            var transacao = await _context.transacoes
+                .Include(t => t.conta)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (transacao == null)
             {
@@ -45,9 +45,9 @@ namespace projBCC2.Controllers
         }
 
         // GET: Transacoes/Create
-        [Authorize(Roles = "ADMIN")]
         public IActionResult Create()
         {
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id");
             return View();
         }
 
@@ -64,22 +64,24 @@ namespace projBCC2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
         // GET: Transacoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Transacao == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var transacao = await _context.Transacao.FindAsync(id);
+            var transacao = await _context.transacoes.FindAsync(id);
             if (transacao == null)
             {
                 return NotFound();
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
@@ -115,18 +117,20 @@ namespace projBCC2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
         // GET: Transacoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Transacao == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var transacao = await _context.Transacao
+            var transacao = await _context.transacoes
+                .Include(t => t.conta)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (transacao == null)
             {
@@ -141,14 +145,14 @@ namespace projBCC2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Transacao == null)
+            if (_context.transacoes == null)
             {
-                return Problem("Entity set 'Contexto.Transacao'  is null.");
+                return Problem("Entity set 'Contexto.transacoes'  is null.");
             }
-            var transacao = await _context.Transacao.FindAsync(id);
+            var transacao = await _context.transacoes.FindAsync(id);
             if (transacao != null)
             {
-                _context.Transacao.Remove(transacao);
+                _context.transacoes.Remove(transacao);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +161,7 @@ namespace projBCC2.Controllers
 
         private bool TransacaoExists(int id)
         {
-          return _context.Transacao.Any(e => e.id == id);
+          return _context.transacoes.Any(e => e.id == id);
         }
     }
 }

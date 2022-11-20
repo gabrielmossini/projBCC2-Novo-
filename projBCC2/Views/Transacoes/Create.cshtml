@@ -14,8 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="contaid" class="control-label"></label>
-                <input asp-for="contaid" class="form-control" />
-                <span asp-validation-for="contaid" class="text-danger"></span>
+                <select asp-for="contaid" class ="form-control" asp-items="ViewBag.contaid"></select>
             </div>
             <div class="form-group">
                 <label asp-for="data" class="control-label"></label>

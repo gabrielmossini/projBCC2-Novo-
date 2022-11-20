@@ -1,4 +1,4 @@
-﻿@model IEnumerable<projBCC2.Models.Clientes>
+﻿@model IEnumerable<projBCC2.Models.Cliente>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.nome)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.idade)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.estado)
             </th>
             <th>
@@ -29,6 +32,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idade)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.estado)

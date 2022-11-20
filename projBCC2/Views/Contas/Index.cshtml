@@ -1,4 +1,4 @@
-﻿@model IEnumerable<projBCC2.Models.Transacao>
+﻿@model IEnumerable<projBCC2.Models.Conta>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.conta)
+                @Html.DisplayNameFor(model => model.clientes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.data)
+                @Html.DisplayNameFor(model => model.produtos)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.operacao)
             </th>
             <th></th>
         </tr>
@@ -34,19 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.conta.id)
+                @Html.DisplayFor(modelItem => item.clientes.cidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.data)
+                @Html.DisplayFor(modelItem => item.produtos.descricao)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.operacao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

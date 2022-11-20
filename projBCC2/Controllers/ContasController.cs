@@ -9,85 +9,94 @@ using projBCC2.Models;
 
 namespace projBCC2.Controllers
 {
-    public class ProdutosController : Controller
+    public class ContasController : Controller
     {
         private readonly Contexto _context;
 
-        public ProdutosController(Contexto context)
+        public ContasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Produtos
+        // GET: Contas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.produtos.ToListAsync());
+            var contexto = _context.contas.Include(c => c.clientes).Include(c => c.produtos);
+            return View(await contexto.ToListAsync());
         }
 
-        // GET: Produtos/Details/5
+        // GET: Contas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos
+            var conta = await _context.contas
+                .Include(c => c.clientes)
+                .Include(c => c.produtos)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
+            if (conta == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(conta);
         }
 
-        // GET: Produtos/Create
+        // GET: Contas/Create
         public IActionResult Create()
         {
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome");
+            ViewData["produtoid"] = new SelectList(_context.produtos, "id", "descricao");
             return View();
         }
 
-        // POST: Produtos/Create
+        // POST: Contas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,descricao,quantidade,valor")] Produto produto)
+        public async Task<IActionResult> Create([Bind("id,clienteid,produtoid,quantidade")] Conta conta)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
+                _context.Add(conta);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", conta.clienteid);
+            ViewData["produtoid"] = new SelectList(_context.produtos, "id", "descricao", conta.produtoid);
+            return View(conta);
         }
 
-        // GET: Produtos/Edit/5
+        // GET: Contas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos.FindAsync(id);
-            if (produto == null)
+            var conta = await _context.contas.FindAsync(id);
+            if (conta == null)
             {
                 return NotFound();
             }
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", conta.clienteid);
+            ViewData["produtoid"] = new SelectList(_context.produtos, "id", "descricao", conta.produtoid);
+            return View(conta);
         }
 
-        // POST: Produtos/Edit/5
+        // POST: Contas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,descricao,quantidade,valor")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("id,clienteid,produtoid,quantidade")] Conta conta)
         {
-            if (id != produto.id)
+            if (id != conta.id)
             {
                 return NotFound();
             }
@@ -96,12 +105,12 @@ namespace projBCC2.Controllers
             {
                 try
                 {
-                    _context.Update(produto);
+                    _context.Update(conta);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProdutoExists(produto.id))
+                    if (!ContaExists(conta.id))
                     {
                         return NotFound();
                     }
@@ -112,49 +121,53 @@ namespace projBCC2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", conta.clienteid);
+            ViewData["produtoid"] = new SelectList(_context.produtos, "id", "descricao", conta.produtoid);
+            return View(conta);
         }
 
-        // GET: Produtos/Delete/5
+        // GET: Contas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos
+            var conta = await _context.contas
+                .Include(c => c.clientes)
+                .Include(c => c.produtos)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
+            if (conta == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(conta);
         }
 
-        // POST: Produtos/Delete/5
+        // POST: Contas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.produtos == null)
+            if (_context.contas == null)
             {
-                return Problem("Entity set 'Contexto.produtos'  is null.");
+                return Problem("Entity set 'Contexto.contas'  is null.");
             }
-            var produto = await _context.produtos.FindAsync(id);
-            if (produto != null)
+            var conta = await _context.contas.FindAsync(id);
+            if (conta != null)
             {
-                _context.produtos.Remove(produto);
+                _context.contas.Remove(conta);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProdutoExists(int id)
+        private bool ContaExists(int id)
         {
-          return _context.produtos.Any(e => e.id == id);
+          return _context.contas.Any(e => e.id == id);
         }
     }
 }
