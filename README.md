@@ -17,8 +17,10 @@ O projeto ainda não tem um tema, mas há a estrutura base.
    <a href="https://cuboid-thorn-1c4.notion.site/LINGUAGEM-DE-PROGRAMA-O-ae2ce93e0837497b828d3aa38fb0df0b">
   NOTION
   </a>
+  
   <br>
+  Link para o projeto final, que devido a erro no banco de dados foi necessário refazer: 
   </a>
-   <a href="https://github.com/gabrielmossini/projBCC2">
-  ORIGINAL PROJECT
+   <a href="(https://github.com/gabrielmossini/projBCC2)">
+  projBCC2
   </a>
