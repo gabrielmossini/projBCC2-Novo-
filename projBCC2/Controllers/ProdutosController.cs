@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,7 @@ namespace projBCC2.Controllers
         }
 
         // GET: Produtos/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -65,6 +67,7 @@ namespace projBCC2.Controllers
         }
 
         // GET: Produtos/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.produtos == null)
@@ -116,6 +119,7 @@ namespace projBCC2.Controllers
         }
 
         // GET: Produtos/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.produtos == null)

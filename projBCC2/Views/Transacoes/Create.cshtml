@@ -1,12 +1,12 @@
 ﻿@model projBCC2.Models.Transacao
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Registro de Transações";
 }
 
-<h1>Create</h1>
+<h1>Menu de Registro de Transações</h1>
 
-<h4>Transacao</h4>
+<h4>Insira os dados Abaixo para Registrar Transação.</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -36,15 +36,14 @@
                 <select asp-for="operacao" class="form-control"></select>
                 <span asp-validation-for="operacao" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
             </div>
+            </br>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

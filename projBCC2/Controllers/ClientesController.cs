@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using projBCC2.Models;
 
 namespace projBCC2.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly Contexto _context;
@@ -45,6 +47,16 @@ namespace projBCC2.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            var estado = Enum.GetValues(typeof(Estado))
+            .Cast<Estado>()
+            .Select(e => new SelectListItem
+            {
+                Value = e.ToString(),
+                Text = e.ToString()
+            });
+
+            ViewBag.bagEstado = estado;
+
             return View();
         }
 
@@ -77,6 +89,16 @@ namespace projBCC2.Controllers
             {
                 return NotFound();
             }
+
+            var estado = Enum.GetValues(typeof(Estado))
+                .Cast<Estado>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                });
+            ViewBag.bagEstado = estado;
+
             return View(cliente);
         }
 

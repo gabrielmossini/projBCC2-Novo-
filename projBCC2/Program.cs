@@ -14,7 +14,6 @@ var connectionString2 = builder.Configuration.GetConnectionString("conexao");
 builder.Services.AddDbContext<Contexto>(options =>
     options.UseSqlServer(connectionString2));
 
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using projBCC2.Models;
+using System.Data;
 using System.Diagnostics;
 
 namespace projBCC2.Controllers
@@ -7,12 +9,12 @@ namespace projBCC2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();

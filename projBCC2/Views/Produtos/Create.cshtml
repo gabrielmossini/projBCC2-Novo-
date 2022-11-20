@@ -1,12 +1,12 @@
 ﻿@model projBCC2.Models.Produto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Registro de Produtos";
 }
 
-<h1>Create</h1>
+<h1>Menu de Registro de Produtos</h1>
 
-<h4>Produto</h4>
+<h4>Insira os dados Abaixo para Registrar Produto.</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -27,15 +27,14 @@
                 <input asp-for="valor" class="form-control" />
                 <span asp-validation-for="valor" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
             </div>
+            </br>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
