@@ -21,6 +21,6 @@ O projeto ainda não tem um tema, mas há a estrutura base.
   <br>
   Link para o projeto final, que devido a erro no banco de dados foi necessário refazer: 
   </a>
-   <a href="(https://github.com/gabrielmossini/projBCC2)">
+   <a href="https://github.com/gabrielmossini/projBCC2">
   projBCC2
   </a>
