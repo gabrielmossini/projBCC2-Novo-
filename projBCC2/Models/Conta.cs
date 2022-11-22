@@ -12,12 +12,12 @@ namespace projBCC2.Models
         public int id { get; set; }
 
         [Display(Name = "Cliente: ")]
-        public Cliente clientes { get; set; }
+        public Cliente? cliente { get; set; }
         [Display(Name = "Cliente: ")]
         public int clienteid { get; set; }
 
         [Display(Name = "Produto: ")]
-        public Produto produtos { get; set; }
+        public Produto? produto { get; set; }
         [Display(Name = "Produto: ")]
         public int produtoid { get; set; }
 

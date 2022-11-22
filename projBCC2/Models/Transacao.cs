@@ -16,7 +16,7 @@ namespace projBCC2.Models
 
         [Required(ErrorMessage = "Conta é obrigatório...")]
         [Display(Name = "Conta: ")]
-        public Conta conta { get; set; }
+        public Conta? conta { get; set; }
         [ForeignKey("Conta")]
         public int contaid { get; set; }
 

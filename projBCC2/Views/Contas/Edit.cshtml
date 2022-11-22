@@ -1,7 +1,7 @@
 ﻿@model projBCC2.Models.Conta
 
 @{
-    ViewData["Title"] = "Edição de Contas";
+    ViewData["Title"] = "Edição de Conta";
 }
 
 <h1>Menu de Edição de Contas.</h1>
@@ -27,10 +27,11 @@
                 <label asp-for="quantidade" class="control-label"></label>
                 <input asp-for="quantidade" class="form-control" />
                 <span asp-validation-for="quantidade" class="text-danger"></span>
+            </div>
             <br>
             <div class="form-group">
-               <input type="submit" value="Criar" class="btn btn-primary" /> |
-               <a asp-action="Index" class="btn btn-light">Retornar</a>
+                <input type="submit" value="Salvar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
             </div>
             </br>
         </form>

@@ -21,7 +21,8 @@ namespace projBCC2.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.transacoes.Include(t => t.conta);
+            var contexto = _context.transacoes.Include(t => t.conta).
+                                      Include(c => c.conta.cliente).Include(m => m.conta.produto);
             return View(await contexto.ToListAsync());
         }
 
@@ -47,7 +48,17 @@ namespace projBCC2.Controllers
         // GET: Transacoes/Create
         public IActionResult Create()
         {
-            ViewData["contaid"] = new SelectList(_context.contas, "id", "id");
+            var operacao = Enum.GetValues(typeof(Operacao))
+            .Cast<Operacao>()
+            .Select(e => new SelectListItem
+            {
+                Value = e.ToString(),
+                Text = e.ToString()
+            });
+            ViewBag.bagOperacao = operacao;
+
+            ViewData["contasid"] = new SelectList(_context.contas, "id", "nome");
+
             return View();
         }
 
@@ -60,11 +71,18 @@ namespace projBCC2.Controllers
         {
             if (ModelState.IsValid)
             {
+                Conta conta = _context.contas.Find(transacao.contaid);
+                if (transacao.operacao == Operacao.Compra)
+                    conta.quantidade = conta.quantidade + transacao.quantidade;
+                else conta.quantidade = conta.quantidade - transacao.quantidade;
+
+                _context.Update(conta);
+
                 _context.Add(transacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "nome", transacao.contaid);
             return View(transacao);
         }
 
@@ -81,7 +99,7 @@ namespace projBCC2.Controllers
             {
                 return NotFound();
             }
-            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "nome", transacao.contaid);
             return View(transacao);
         }
 
@@ -117,7 +135,7 @@ namespace projBCC2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "nome", transacao.contaid);
             return View(transacao);
         }
 

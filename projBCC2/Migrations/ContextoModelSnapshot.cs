@@ -134,13 +134,13 @@ namespace projBCC2.Migrations
             modelBuilder.Entity("projBCC2.Models.Conta", b =>
                 {
                     b.HasOne("projBCC2.Models.Cliente", "clientes")
-                        .WithMany()
+                        .WithMany("contas")
                         .HasForeignKey("clienteid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("projBCC2.Models.Produto", "produtos")
-                        .WithMany()
+                        .WithMany("contas")
                         .HasForeignKey("produtoid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -153,13 +153,28 @@ namespace projBCC2.Migrations
             modelBuilder.Entity("projBCC2.Models.Transacao", b =>
                 {
                     b.HasOne("projBCC2.Models.Conta", "conta")
-                        .WithMany()
+                        .WithMany("transacoes")
                         .HasForeignKey("contaid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("conta");
                 });
+
+            modelBuilder.Entity("projBCC2.Models.Cliente", b =>
+            {
+                b.Navigation("contas");
+            });
+
+            modelBuilder.Entity("projBCC2.Models.Conta", b =>
+            {
+                b.Navigation("transacoes");
+            });
+
+            modelBuilder.Entity("projBCC2.Models.Transacao", b =>
+            {
+                b.Navigation("contas");
+            });
 #pragma warning restore 612, 618
         }
     }

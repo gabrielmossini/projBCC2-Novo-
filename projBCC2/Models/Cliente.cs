@@ -1,9 +1,5 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-using Newtonsoft.Json.Serialization;
-using System.Drawing;
 
 namespace projBCC2.Models
 {
@@ -16,10 +12,10 @@ namespace projBCC2.Models
         [Display(Name = "ID: ")]
         public int id { get; set; }
 
-        [StringLength(40)]
         [Required(ErrorMessage = "Campo NOME é obrigatorio...")]
         [Display(Name = "Nome: ")]
-        public string nome { get; set; }
+        [StringLength(40)]
+        public string? nome { get; set; }
 
         [Display(Name = "Idade: ")]
         [Range(18, 70, ErrorMessage = "Insira uma idade entre 18 - 70")]
@@ -32,7 +28,7 @@ namespace projBCC2.Models
         [StringLength(40)]
         [Required(ErrorMessage = "Campo CIDADE é obrigatorio...")]
         [Display(Name = "Cidade: ")]
-        public string cidade { get; set; }
+        public string? cidade { get; set; }
 
         //public ICollection<Conta> contas { get; set; }
 

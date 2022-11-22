@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +21,7 @@ namespace projBCC2.Controllers
         // GET: Contas
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.contas.Include(c => c.clientes).Include(c => c.produtos);
+            var contexto = _context.contas.Include(c => c.cliente).Include(c => c.produto);
             return View(await contexto.ToListAsync());
         }
 
@@ -35,8 +34,8 @@ namespace projBCC2.Controllers
             }
 
             var conta = await _context.contas
-                .Include(c => c.clientes)
-                .Include(c => c.produtos)
+                .Include(c => c.cliente)
+                .Include(c => c.produto)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (conta == null)
             {
@@ -136,8 +135,8 @@ namespace projBCC2.Controllers
             }
 
             var conta = await _context.contas
-                .Include(c => c.clientes)
-                .Include(c => c.produtos)
+                .Include(c => c.cliente)
+                .Include(c => c.produto)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (conta == null)
             {
