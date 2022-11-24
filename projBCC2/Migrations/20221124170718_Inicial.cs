@@ -105,37 +105,31 @@ namespace projBCC2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Revenda",
+                name: "Revendas",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     clienteid = table.Column<int>(type: "int", nullable: false),
+                    compraid = table.Column<int>(type: "int", nullable: false),
                     data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    compraid = table.Column<int>(type: "int", nullable: true),
-                    valorUN = table.Column<int>(type: "int", nullable: false),
-                    quantidadeVenda = table.Column<int>(type: "int", nullable: false),
-                    comprasid = table.Column<int>(type: "int", nullable: true)
+                    quantidadeVenda = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Revenda", x => x.id);
+                    table.PrimaryKey("PK_Revendas", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Revenda_Clientes_clienteid",
+                        name: "FK_Revendas_Clientes_clienteid",
                         column: x => x.clienteid,
                         principalTable: "Clientes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Revenda_Compras_compraid",
+                        name: "FK_Revendas_Compras_compraid",
                         column: x => x.compraid,
                         principalTable: "Compras",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_Revenda_Compras_comprasid",
-                        column: x => x.comprasid,
-                        principalTable: "Compras",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,9 +152,9 @@ namespace projBCC2.Migrations
                         principalTable: "Compras",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_Balancete_Revenda_revendaid",
+                        name: "FK_Balancete_Revendas_revendaid",
                         column: x => x.revendaid,
-                        principalTable: "Revenda",
+                        principalTable: "Revendas",
                         principalColumn: "id");
                 });
 
@@ -190,19 +184,14 @@ namespace projBCC2.Migrations
                 column: "compraid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Revenda_clienteid",
-                table: "Revenda",
+                name: "IX_Revendas_clienteid",
+                table: "Revendas",
                 column: "clienteid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Revenda_compraid",
-                table: "Revenda",
+                name: "IX_Revendas_compraid",
+                table: "Revendas",
                 column: "compraid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Revenda_comprasid",
-                table: "Revenda",
-                column: "comprasid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,7 +203,7 @@ namespace projBCC2.Migrations
                 name: "Produto");
 
             migrationBuilder.DropTable(
-                name: "Revenda");
+                name: "Revendas");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

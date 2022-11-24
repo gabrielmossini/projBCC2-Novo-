@@ -12,7 +12,7 @@ using projBCC2.Models;
 namespace projBCC2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20221124023943_Inicial")]
+    [Migration("20221124170718_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,7 +130,7 @@ namespace projBCC2.Migrations
                     b.Property<int>("idade")
                         .HasColumnType("int");
 
-                    b.Property<string>("nomeCliente")
+                    b.Property<string>("nomeFuncionarios")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
@@ -198,10 +198,7 @@ namespace projBCC2.Migrations
                     b.Property<int>("clienteid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("compraid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("comprasid")
+                    b.Property<int>("compraid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("data")
@@ -210,18 +207,13 @@ namespace projBCC2.Migrations
                     b.Property<int>("quantidadeVenda")
                         .HasColumnType("int");
 
-                    b.Property<int>("valorUN")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("clienteid");
 
                     b.HasIndex("compraid");
 
-                    b.HasIndex("comprasid");
-
-                    b.ToTable("Revenda");
+                    b.ToTable("Revendas");
                 });
 
             modelBuilder.Entity("projBCC2.Models.Compra", b =>
@@ -279,17 +271,13 @@ namespace projBCC2.Migrations
 
                     b.HasOne("projBCC2.Models.Compra", "compra")
                         .WithMany()
-                        .HasForeignKey("compraid");
-
-                    b.HasOne("projBCC2.Models.Compra", "compras")
-                        .WithMany()
-                        .HasForeignKey("comprasid");
+                        .HasForeignKey("compraid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("cliente");
 
                     b.Navigation("compra");
-
-                    b.Navigation("compras");
                 });
 #pragma warning restore 612, 618
         }

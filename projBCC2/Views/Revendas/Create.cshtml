@@ -1,0 +1,46 @@
+﻿@model projBCC2.Models.Revenda
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Revenda</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="clienteid" class="control-label"></label>
+                <select asp-for="clienteid" class ="form-control" asp-items="ViewBag.clienteid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="compraid" class="control-label"></label>
+                <select asp-for="compraid" class ="form-control" asp-items="ViewBag.compraid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="data" class="control-label"></label>
+                <input asp-for="data" class="form-control" />
+                <span asp-validation-for="data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantidadeVenda" class="control-label"></label>
+                <input asp-for="quantidadeVenda" class="form-control" id="quantidade" onblur="Calcular()" />
+                <span asp-validation-for="quantidadeVenda" class="text-danger"></span>
+            </div>
+            
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
+            </div>
+            </br>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

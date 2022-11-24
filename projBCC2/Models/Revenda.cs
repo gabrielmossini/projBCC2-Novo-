@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using projBCC2.Controllers;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projBCC2.Models
 {
-    [Table("Revenda")]
+    [Table("Revendas")]
     public class Revenda
     {
         [Key]
@@ -16,41 +17,36 @@ namespace projBCC2.Models
         [Display(Name = "Cliente: ")]
         public int clienteid { get; set; }
 
+        [Display(Name = "Compra: ")]
+        public Compra? compra { get; set; }
+        [Display(Name = "Compra: ")]
+        public int compraid { get; set; }
+
         [Display(Name = "Data: ")]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
         public DateTime data { get; set; }
-
-        [Display(Name = "Valor: ")]
-        public Compra? compra { get; set; }
-        [Display(Name = "Valor: ")]
-        public int valorUN { get; set; }
 
         [Required(ErrorMessage = "Campo QUANTIDADE é obrigatorio...")]
         [Display(Name = "Quantidade: ")]
         public int quantidadeVenda { get; set; }
 
-        [Display(Name = "Estoque: ")]
-        public Compra? compras { get; set; }
-        [Display(Name = "Estoque: ")]
-        public int compraquantidadeCompra { get; }
-
-        [Display(Name = "Total: ")]
+        /*[Display(Name = "Total: ")]
         [NotMapped]
         [DisplayFormat(DataFormatString = "{0:N2}")]
         public virtual float total
         {
             get
             {
-                return quantidadeVenda * valorUN;
+                return quantidadeVenda * compra.valorUN;
             }
-        }
+        }*/
         [Display(Name = "Estoque: ")]
         [NotMapped]
         public virtual int estoque
         {
             get
             {
-                return compraquantidadeCompra - quantidadeVenda;
+                return compra.quantidadeCompra - quantidadeVenda;
             }
         }
     }

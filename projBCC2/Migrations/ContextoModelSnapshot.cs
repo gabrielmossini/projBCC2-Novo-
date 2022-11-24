@@ -196,10 +196,7 @@ namespace projBCC2.Migrations
                     b.Property<int>("clienteid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("compraid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("comprasid")
+                    b.Property<int>("compraid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("data")
@@ -208,18 +205,13 @@ namespace projBCC2.Migrations
                     b.Property<int>("quantidadeVenda")
                         .HasColumnType("int");
 
-                    b.Property<int>("valorUN")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("clienteid");
 
                     b.HasIndex("compraid");
 
-                    b.HasIndex("comprasid");
-
-                    b.ToTable("Revenda");
+                    b.ToTable("Revendas");
                 });
 
             modelBuilder.Entity("projBCC2.Models.Compra", b =>
@@ -277,17 +269,13 @@ namespace projBCC2.Migrations
 
                     b.HasOne("projBCC2.Models.Compra", "compra")
                         .WithMany()
-                        .HasForeignKey("compraid");
-
-                    b.HasOne("projBCC2.Models.Compra", "compras")
-                        .WithMany()
-                        .HasForeignKey("comprasid");
+                        .HasForeignKey("compraid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("cliente");
 
                     b.Navigation("compra");
-
-                    b.Navigation("compras");
                 });
 #pragma warning restore 612, 618
         }

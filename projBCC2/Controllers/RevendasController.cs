@@ -10,91 +10,95 @@ using projBCC2.Models;
 
 namespace projBCC2.Controllers
 {
-    [Authorize]
-    public class ProdutosController : Controller
+    public class RevendasController : Controller
     {
         private readonly Contexto _context;
 
-        public ProdutosController(Contexto context)
+        public RevendasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Produtos
+        // GET: Revendas
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.produtos.Include(p => p.compra);
+            var contexto = _context.revendas.Include(r => r.cliente).Include(r => r.compra);
             return View(await contexto.ToListAsync());
         }
 
-        // GET: Produtos/Details/5
+        // GET: Revendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.revendas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos
-                .Include(p => p.compra)
+            var revenda = await _context.revendas
+                .Include(r => r.cliente)
+                .Include(r => r.compra)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
+            if (revenda == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(revenda);
         }
-
-        // GET: Produtos/Create
+        // GET: Revendas/Create
+        [Authorize]
         public IActionResult Create()
         {
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome");
             ViewData["compraid"] = new SelectList(_context.compras, "id", "produto");
             return View();
         }
 
-        // POST: Produtos/Create
+        // POST: Revendas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,compraid")] Produto produto)
+        public async Task<IActionResult> Create([Bind("id,clienteid,compraid,data,quantidadeVenda")] Revenda revenda)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
+                _context.Add(revenda);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", revenda.clienteid);
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", revenda.compraid);
+            return View(revenda);
         }
 
-        // GET: Produtos/Edit/5
+        // GET: Revendas/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.revendas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos.FindAsync(id);
-            if (produto == null)
+            var revenda = await _context.revendas.FindAsync(id);
+            if (revenda == null)
             {
                 return NotFound();
             }
-            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", revenda.clienteid);
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", revenda.compraid);
+            return View(revenda);
         }
 
-        // POST: Produtos/Edit/5
+        // POST: Revendas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,compraid")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("id,clienteid,compraid,data,quantidadeVenda")] Revenda revenda)
         {
-            if (id != produto.id)
+            if (id != revenda.id)
             {
                 return NotFound();
             }
@@ -103,12 +107,12 @@ namespace projBCC2.Controllers
             {
                 try
                 {
-                    _context.Update(produto);
+                    _context.Update(revenda);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProdutoExists(produto.id))
+                    if (!RevendaExists(revenda.id))
                     {
                         return NotFound();
                     }
@@ -119,51 +123,54 @@ namespace projBCC2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
-            return View(produto);
+            ViewData["clienteid"] = new SelectList(_context.clientes, "id", "nome", revenda.clienteid);
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", revenda.compraid);
+            return View(revenda);
         }
 
-        // GET: Produtos/Delete/5
+        // GET: Revendas/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.produtos == null)
+            if (id == null || _context.revendas == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.produtos
-                .Include(p => p.compra)
+            var revenda = await _context.revendas
+                .Include(r => r.cliente)
+                .Include(r => r.compra)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
+            if (revenda == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(revenda);
         }
 
-        // POST: Produtos/Delete/5
+        // POST: Revendas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.produtos == null)
+            if (_context.revendas == null)
             {
-                return Problem("Entity set 'Contexto.produtos'  is null.");
+                return Problem("Entity set 'Contexto.revendas'  is null.");
             }
-            var produto = await _context.produtos.FindAsync(id);
-            if (produto != null)
+            var revenda = await _context.revendas.FindAsync(id);
+            if (revenda != null)
             {
-                _context.produtos.Remove(produto);
+                _context.revendas.Remove(revenda);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProdutoExists(int id)
+        private bool RevendaExists(int id)
         {
-          return _context.produtos.Any(e => e.id == id);
+          return _context.revendas.Any(e => e.id == id);
         }
     }
 }

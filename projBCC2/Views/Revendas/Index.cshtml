@@ -1,0 +1,77 @@
+﻿@model IEnumerable<projBCC2.Models.Revenda>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.compra.valorUN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.compra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantidadeVenda)
+            </th>
+            <th>
+                Total:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            float totalGeral = 0;
+        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cliente.nome)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.compra.valorUN)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.compra.produto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantidadeVenda)
+            </td>
+            @{
+                float total = item.quantidadeVenda * item.compra.valorUN;
+                totalGeral = totalGeral + total;
+                }
+                <td>
+                    @total.ToString("C2")
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id" class="btn btn-primary">Detalhes</a> |
+                    <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-warning">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">Excluir</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div align="right">
+    <h3>Total Geral: @totalGeral.ToString("C2")</h3>
+</div>
