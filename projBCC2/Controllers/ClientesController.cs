@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ using projBCC2.Models;
 
 namespace projBCC2.Controllers
 {
-    [Authorize]
     public class ClientesController : Controller
     {
         private readonly Contexto _context;
@@ -47,15 +45,15 @@ namespace projBCC2.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
-            var estado = Enum.GetValues(typeof(Estado))
-            .Cast<Estado>()
+            var estado = Enum.GetValues(typeof(EstadoCliente))
+            .Cast<EstadoCliente>()
             .Select(e => new SelectListItem
             {
                 Value = e.ToString(),
                 Text = e.ToString()
             });
 
-            ViewBag.bagEstado = estado;
+            ViewBag.bagEstadoCliente = estado;
 
             return View();
         }
@@ -65,7 +63,7 @@ namespace projBCC2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,idade,estado,cidade")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("id,nome,idade,estadoCliente,cidade")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -90,14 +88,14 @@ namespace projBCC2.Controllers
                 return NotFound();
             }
 
-            var estado = Enum.GetValues(typeof(Estado))
-                .Cast<Estado>()
+            var estado = Enum.GetValues(typeof(EstadoCliente))
+                .Cast<EstadoCliente>()
                 .Select(e => new SelectListItem
                 {
                     Value = e.ToString(),
                     Text = e.ToString()
                 });
-            ViewBag.bagEstado = estado;
+            ViewBag.bagEstadoCliente = estado;
 
             return View(cliente);
         }
@@ -107,7 +105,7 @@ namespace projBCC2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,idade,estado,cidade")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nome,idade,estadoCliente,cidade")] Cliente cliente)
         {
             if (id != cliente.id)
             {

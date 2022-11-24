@@ -1,40 +1,30 @@
 ﻿@model projBCC2.Models.Produto
 
 @{
-    ViewData["Title"] = "Registro de Produtos";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Menu de Registro de Produtos</h1>
+<h1>Create</h1>
 
-<h4>Insira os dados Abaixo para Registrar Produto.</h4>
+<h4>Produto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="descricao" class="control-label"></label>
-                <input asp-for="descricao" class="form-control" />
-                <span asp-validation-for="descricao" class="text-danger"></span>
+                <label asp-for="compraid" class="control-label"></label>
+                <select asp-for="compraid" class ="form-control" asp-items="ViewBag.compraid"></select>
             </div>
             <div class="form-group">
-                <label asp-for="quantidade" class="control-label"></label>
-                <input asp-for="quantidade" class="form-control" />
-                <span asp-validation-for="quantidade" class="text-danger"></span>
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-            <div class="form-group">
-                <label asp-for="valor" class="control-label"></label>
-                <input asp-for="valor" class="form-control" />
-                <span asp-validation-for="valor" class="text-danger"></span>
-            </div>
-            <br>
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" /> |
-                <a asp-action="Index" class="btn btn-light">Retornar</a>
-            </div>
-            </br>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

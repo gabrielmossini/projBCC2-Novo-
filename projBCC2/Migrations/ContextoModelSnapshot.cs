@@ -35,7 +35,7 @@ namespace projBCC2.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("estado")
+                    b.Property<int>("estadoCliente")
                         .HasColumnType("int");
 
                     b.Property<int>("idade")
@@ -51,7 +51,7 @@ namespace projBCC2.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("projBCC2.Models.Conta", b =>
+            modelBuilder.Entity("projBCC2.Models.Compra", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -59,22 +59,112 @@ namespace projBCC2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("clienteid")
+                    b.Property<DateTime>("data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("empresaid")
                         .HasColumnType("int");
 
-                    b.Property<int>("produtoid")
+                    b.Property<int>("funcionarioid")
                         .HasColumnType("int");
 
-                    b.Property<float>("quantidade")
+                    b.Property<string>("produto")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("quantidadeCompra")
+                        .HasColumnType("int");
+
+                    b.Property<float>("valorUN")
                         .HasColumnType("real");
 
                     b.HasKey("id");
 
-                    b.HasIndex("clienteid");
+                    b.HasIndex("empresaid");
 
-                    b.HasIndex("produtoid");
+                    b.HasIndex("funcionarioid");
 
-                    b.ToTable("Contas");
+                    b.ToTable("Compras");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Empresa", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("cidade")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("estadoEmpresa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nomeEmpresa")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Empresas");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Funcionario", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int>("funcao")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nomeFuncionarios")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Funcionarios");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Movimentacao", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int?>("comprasid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("comprastotal")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("revendaid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("revendastotal")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("comprasid");
+
+                    b.HasIndex("revendaid");
+
+                    b.ToTable("Balancete");
                 });
 
             modelBuilder.Entity("projBCC2.Models.Produto", b =>
@@ -85,23 +175,17 @@ namespace projBCC2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("descricao")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<int>("quantidade")
+                    b.Property<int>("compraid")
                         .HasColumnType("int");
 
-                    b.Property<float>("valor")
-                        .HasColumnType("real");
-
                     b.HasKey("id");
+
+                    b.HasIndex("compraid");
 
                     b.ToTable("Produto");
                 });
 
-            modelBuilder.Entity("projBCC2.Models.Transacao", b =>
+            modelBuilder.Entity("projBCC2.Models.Revenda", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -109,72 +193,102 @@ namespace projBCC2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("contaid")
+                    b.Property<int>("clienteid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("compraid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("comprasid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("data")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("operacao")
+                    b.Property<int>("quantidadeVenda")
                         .HasColumnType("int");
 
-                    b.Property<float>("quantidade")
-                        .HasColumnType("real");
-
-                    b.Property<float>("valor")
-                        .HasColumnType("real");
+                    b.Property<int>("valorUN")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("contaid");
+                    b.HasIndex("clienteid");
 
-                    b.ToTable("Transacoes");
+                    b.HasIndex("compraid");
+
+                    b.HasIndex("comprasid");
+
+                    b.ToTable("Revenda");
                 });
 
-            modelBuilder.Entity("projBCC2.Models.Conta", b =>
+            modelBuilder.Entity("projBCC2.Models.Compra", b =>
                 {
-                    b.HasOne("projBCC2.Models.Cliente", "clientes")
-                        .WithMany("contas")
+                    b.HasOne("projBCC2.Models.Empresa", "empresa")
+                        .WithMany()
+                        .HasForeignKey("empresaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("projBCC2.Models.Funcionario", "funcionario")
+                        .WithMany()
+                        .HasForeignKey("funcionarioid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("empresa");
+
+                    b.Navigation("funcionario");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Movimentacao", b =>
+                {
+                    b.HasOne("projBCC2.Models.Compra", "compras")
+                        .WithMany()
+                        .HasForeignKey("comprasid");
+
+                    b.HasOne("projBCC2.Models.Revenda", "revenda")
+                        .WithMany()
+                        .HasForeignKey("revendaid");
+
+                    b.Navigation("compras");
+
+                    b.Navigation("revenda");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Produto", b =>
+                {
+                    b.HasOne("projBCC2.Models.Compra", "compra")
+                        .WithMany()
+                        .HasForeignKey("compraid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("compra");
+                });
+
+            modelBuilder.Entity("projBCC2.Models.Revenda", b =>
+                {
+                    b.HasOne("projBCC2.Models.Cliente", "cliente")
+                        .WithMany()
                         .HasForeignKey("clienteid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("projBCC2.Models.Produto", "produtos")
-                        .WithMany("contas")
-                        .HasForeignKey("produtoid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("projBCC2.Models.Compra", "compra")
+                        .WithMany()
+                        .HasForeignKey("compraid");
 
-                    b.Navigation("clientes");
+                    b.HasOne("projBCC2.Models.Compra", "compras")
+                        .WithMany()
+                        .HasForeignKey("comprasid");
 
-                    b.Navigation("produtos");
+                    b.Navigation("cliente");
+
+                    b.Navigation("compra");
+
+                    b.Navigation("compras");
                 });
-
-            modelBuilder.Entity("projBCC2.Models.Transacao", b =>
-                {
-                    b.HasOne("projBCC2.Models.Conta", "conta")
-                        .WithMany("transacoes")
-                        .HasForeignKey("contaid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("conta");
-                });
-
-            modelBuilder.Entity("projBCC2.Models.Cliente", b =>
-            {
-                b.Navigation("contas");
-            });
-
-            modelBuilder.Entity("projBCC2.Models.Conta", b =>
-            {
-                b.Navigation("transacoes");
-            });
-
-            modelBuilder.Entity("projBCC2.Models.Transacao", b =>
-            {
-                b.Navigation("contas");
-            });
 #pragma warning restore 612, 618
         }
     }

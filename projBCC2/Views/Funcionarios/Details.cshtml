@@ -1,0 +1,36 @@
+﻿@model projBCC2.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Detalhes sobre Funcionario";
+}
+
+<h1>Detalhes sobre Funcionario.</h1>
+
+<div>
+    <h4>Funcionario</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nomeFuncionarios)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nomeFuncionarios)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.idade)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.idade)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.funcao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.funcao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.id" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-light">Retornar</a>
+</div>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +21,8 @@ namespace projBCC2.Controllers
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.produtos.ToListAsync());
+            var contexto = _context.produtos.Include(p => p.compra);
+            return View(await contexto.ToListAsync());
         }
 
         // GET: Produtos/Details/5
@@ -34,6 +34,7 @@ namespace projBCC2.Controllers
             }
 
             var produto = await _context.produtos
+                .Include(p => p.compra)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (produto == null)
             {
@@ -44,9 +45,9 @@ namespace projBCC2.Controllers
         }
 
         // GET: Produtos/Create
-        [Authorize]
         public IActionResult Create()
         {
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace projBCC2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,descricao,quantidade,valor")] Produto produto)
+        public async Task<IActionResult> Create([Bind("id,compraid")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -63,11 +64,11 @@ namespace projBCC2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
             return View(produto);
         }
 
         // GET: Produtos/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.produtos == null)
@@ -80,6 +81,7 @@ namespace projBCC2.Controllers
             {
                 return NotFound();
             }
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
             return View(produto);
         }
 
@@ -88,7 +90,7 @@ namespace projBCC2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,descricao,quantidade,valor")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("id,compraid")] Produto produto)
         {
             if (id != produto.id)
             {
@@ -115,11 +117,11 @@ namespace projBCC2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["compraid"] = new SelectList(_context.compras, "id", "produto", produto.compraid);
             return View(produto);
         }
 
         // GET: Produtos/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.produtos == null)
@@ -128,6 +130,7 @@ namespace projBCC2.Controllers
             }
 
             var produto = await _context.produtos
+                .Include(p => p.compra)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (produto == null)
             {

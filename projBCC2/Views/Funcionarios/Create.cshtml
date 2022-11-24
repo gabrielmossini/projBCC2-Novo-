@@ -1,0 +1,44 @@
+﻿@model projBCC2.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Registro de Funcionarios";
+}
+
+<h1>Menu de Registro de Clientes</h1>
+
+<h4>Insira os dados Abaixo para Registrar Cliente.</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nomeFuncionarios" class="control-label"></label>
+                <input asp-for="nomeFuncionarios" class="form-control" />
+                <span asp-validation-for="nomeFuncionarios" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idade" class="control-label"></label>
+                <input asp-for="idade" class="form-control" />
+                <span asp-validation-for="idade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="funcao" class="control-label"></label>
+                <select asp-for="funcao" asp-items="ViewBag.bagFuncao" class="form-control">
+                    <option selected="selected" value="">Selecione o Setor</option>
+                </select>
+                <span asp-validation-for="funcao" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
+            </div>
+            </br>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace projBCC2.Models
 {
-    public enum Estado { AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, MT, MS, MG, PA, PB, PR, PE, PI, RJ, RN, RS, RO, RR, SC, SP, SE, TO }
+    public enum EstadoCliente { AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, MT, MS, MG, PA, PB, PR, PE, PI, RJ, RN, RS, RO, RR, SC, SP, SE, TO }
     [Table("Clientes")]
     public class Cliente
     {
@@ -23,7 +23,7 @@ namespace projBCC2.Models
 
         [Required(ErrorMessage = "Campo Estado é obrigatorio...")]
         [Display(Name = "Estado: ")]
-        public Estado estado { get; set; }
+        public EstadoCliente estadoCliente { get; set; }
 
         [StringLength(40)]
         [Required(ErrorMessage = "Campo CIDADE é obrigatorio...")]

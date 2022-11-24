@@ -12,19 +12,10 @@ namespace projBCC2.Models
         [Display(Name = "ID")]
         public int id { get; set; }
 
-        [StringLength(40)]
-        [Required(ErrorMessage = "Campo PRODUTO é obrigatorio...")]
         [Display(Name = "Produto: ")]
-        public string descricao { get; set; }
+        public Compra? compra { get; set; }
+        [Display(Name = "Produto: ")]
+        public int compraid { get; set; }
 
-        [Required(ErrorMessage = "Campo Quantidade é obrigatorio...")]
-        [Display(Name = "Quantidade (Estoque): ")]
-        public int quantidade { get; set; }
-
-        [DisplayFormat(DataFormatString = "R$ {0:N2}")]
-        [Display(Name = "Valor (Unidade)")]
-        public float valor { get; set; }
-
-        //public ICollection<Conta> contas { get; set; }
     }
 }

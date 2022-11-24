@@ -5,10 +5,21 @@ namespace projBCC2.Models
 {
     public class Contexto: DbContext
     {
-        public Contexto(DbContextOptions<Contexto> options) : base(options) { }
-        public DbSet<Produto> produtos { get; set; }
         public DbSet<Cliente> clientes { get; set; }
-        public DbSet<projBCC2.Models.Transacao> transacoes { get; set; }
-        public DbSet<Conta> contas { get; set; }
+
+        public DbSet<Compra> compras { get; set; }
+
+        public DbSet<Empresa> empresas { get; set; }
+
+        public DbSet<Funcionario> funcionarios { get; set; }
+
+        public DbSet<Movimentacao> balancete { get; set; }
+
+        public DbSet<Produto> produtos { get; set; }
+
+        public DbSet<Revenda> revendas { get; set; }
+
+        public Contexto(DbContextOptions<Contexto> options) : base(options) { }
+
     }
 }
