@@ -1,0 +1,24 @@
+﻿@model projBCC2.Models.Cliente
+
+@{
+    ViewData["Title"] = "Pesquisa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Pesquisar</h1>
+
+<h4>Clientes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Cliente">
+            <div class="form-group">
+                <label asp-for="nome" class="control-label"></label>
+                <input asp-for="nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Pesquisa" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

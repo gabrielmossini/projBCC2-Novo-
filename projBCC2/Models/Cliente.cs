@@ -18,7 +18,7 @@ namespace projBCC2.Models
         public string? nome { get; set; }
 
         [Display(Name = "Idade: ")]
-        [Range(18, 70, ErrorMessage = "Insira uma idade entre 18 - 70")]
+        [Range(18, 75, ErrorMessage = "Insira uma idade entre 18 - 75")]
         public int idade { get; set; }
 
         [Required(ErrorMessage = "Campo Estado é obrigatorio...")]

@@ -45,7 +45,6 @@ namespace projBCC2.Controllers
         }
 
         // GET: Clientes/Create
-        [Authorize(Roles = "ADMIN")]
         public IActionResult Create()
         {
             var estado = Enum.GetValues(typeof(EstadoCliente))

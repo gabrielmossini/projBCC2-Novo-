@@ -12,7 +12,7 @@ using projBCC2.Models;
 namespace projBCC2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20221124170718_Inicial")]
+    [Migration("20221127141514_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

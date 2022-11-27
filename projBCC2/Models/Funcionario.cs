@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace projBCC2.Models
 {
-    public enum Funcao { COMPRAS, FINANÇAS, REGISTRO, TI}
+    public enum Funcao { COMPRAS, FINANÇAS, REGISTRO, TI, RECEPÇÃO, PESSOAL, TESOURARIA, ENGENHARIA, SEGURANÇA, MOTORISTA, ADMINISTRAÇÃO}
     [Table("Funcionarios")]
     public class Funcionario
     {
